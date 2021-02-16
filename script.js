@@ -1,8 +1,8 @@
 //Storage for the books
 let library = [];
-let booksCount;
-let readCount;
-let notReadCount;
+let booksCount = 0;
+let readCount = 0;
+let notReadCount = 0;
 let tableBooks = document.getElementById('table-books');
 
 //Constructor
@@ -19,10 +19,14 @@ function Book(title, author, language, publishDate, numPages, isRead) {
   }
 }
 
-//Takes a book as a parameter and change swap isRead value
+//PROTOTYPE: Takes a book as a parameter and change swap isRead value
 Book.prototype.changeReadStatus = function () {
   this.isRead = !this.isRead;
 }
+
+//Adds Click functionality to certain buttons.
+document.addEventListener('click', changeIsReadColor);
+document.addEventListener('click', removeBookFromLibrary);
 
 //Takes a book as a parameter and adds it to the library array
 function addBookToLibrary(book) {
@@ -30,8 +34,12 @@ function addBookToLibrary(book) {
 }
 
 //Removes a book from the library
-function removeBookFromLibrary(index) {
-  library.splice(index, 1);
+function removeBookFromLibrary(e) {
+  if (e.target.id == 'remove-button') {
+    let index = e.target.closest('tr').dataset.id
+    library.splice(index, 1);
+    showBooks();
+  }
 }
 
 //Function that loops through the array and display each book on page
@@ -50,17 +58,37 @@ function showBooks() {
     for (const property in book) {
       let cellElement = document.createElement('td');
 
-      if (property == 'publishDate') {
-        cellElement.innerHTML = book[property].toLocaleDateString();
-      } else {
-        cellElement.innerHTML = book[property];
+      switch (property) {
+        case 'publishDate':
+          cellElement.innerHTML = book[property].toLocaleDateString();
+          break;
+        case 'isRead':
+          let round = document.createElement('div');
+          round.setAttribute('id', 'is-readed');
+          showIsReadColor(round, book[property]);
+          cellElement.appendChild(round);
+          break;
+        case 'info':
+        case 'changeReadStatus':
+          continue;
+        default:
+          cellElement.innerHTML = book[property];
       }
-      //Exit condition. Not showing function properties from book
-      if (property == 'info' || property == 'changeReadStatus') continue;
       fileElement.appendChild(cellElement);
     }
+    //Adding edit and delete button to each row
+    let editButton = document.createElement('i');
+    editButton.setAttribute('class', 'far fa-edit');
+    editButton.setAttribute('id', 'edit-button');
+    fileElement.appendChild(editButton);
+    let removeButton = document.createElement('i');
+    removeButton.setAttribute('class', 'far fa-trash-alt');
+    removeButton.setAttribute('id', 'remove-button');
+    fileElement.appendChild(removeButton);
+
     document.getElementById('table-books').appendChild(fileElement);
   });
+  updateDisplayCountBooks();
 }
 
 //Update books counters
@@ -77,6 +105,25 @@ function updateDisplayCountBooks() {
   document.getElementById('not-read-count').innerHTML = notReadCount;
 }
 
+//Call change read status and swap color button at DOM
+function changeIsReadColor(e) {
+  if (e.target.id == 'is-readed') {
+    library[e.target.closest('tr').dataset.id].changeReadStatus();
+    let domElem = e.target;
+    let isBookRead = library[e.target.closest('tr').dataset.id].isRead;
+    showIsReadColor(domElem, isBookRead);
+  } else return;
+}
+
+//Changes color when called.
+function showIsReadColor(elem, isRead) {
+  elem.classList = ''
+  if (isRead) {
+    elem.classList.add('readed')
+  } else {
+    elem.classList.add('not-readed');
+  }
+}
 
 
 //Adding some dummy data
@@ -99,7 +146,4 @@ addBookToLibrary(book3);
 addBookToLibrary(book4);
 
 //Some tests
-updateDisplayCountBooks();
-showBooks();
-removeBookFromLibrary(0);
 showBooks();
