@@ -1,8 +1,10 @@
-//Storage for the books
+//Storage for books and counters
 let library = [];
 let booksCount = 0;
 let readCount = 0;
 let notReadCount = 0;
+
+//DOM Elements
 let tableBooks = document.getElementById('table-books');
 
 //Constructor
