@@ -131,6 +131,4 @@ addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
 addBookToLibrary(book4);
-
-//Some tests
 showBooks();
