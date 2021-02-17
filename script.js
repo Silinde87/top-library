@@ -15,10 +15,6 @@ function Book(title, author, language, publishDate, numPages, isRead) {
   this.publishDate = publishDate;
   this.numPages = numPages;
   this.isRead = isRead;
-  this.info = () => {
-    let readOutput = isRead ? 'readed' : 'not readed yet'
-    return `${this.title} by ${this.author}, ${this.numPages} pages, writed in ${this.language} at ${this.publishDate.toLocaleDateString()}, ${readOutput}`
-  }
 }
 
 //PROTOTYPE: Takes a book as a parameter and change swap isRead value
@@ -55,38 +51,30 @@ function showBooks() {
     let fileElement = document.createElement('tr');
     //Setting a data-attribute to each file. Same as array index.
     fileElement.dataset.id = i++;
-
     //Iterating over book object properties
     for (const property in book) {
       let cellElement = document.createElement('td');
 
-      switch (property) {
-        case 'publishDate':
-          cellElement.innerHTML = book[property].toLocaleDateString();
-          break;
-        case 'isRead':
-          let round = document.createElement('div');
-          round.setAttribute('id', 'is-readed');
-          showIsReadColor(round, book[property]);
-          cellElement.appendChild(round);
-          break;
-        case 'info':
-        case 'changeReadStatus':
-          continue;
-        default:
-          cellElement.innerHTML = book[property];
-      }
+      if(book.hasOwnProperty(property)){
+        switch (property) {
+          case 'publishDate':
+            cellElement.innerHTML = book[property].toLocaleDateString();
+            break;
+          case 'isRead':
+            let round = document.createElement('div');
+            round.setAttribute('id', 'is-readed');
+            showIsReadColor(round, book[property]);
+            cellElement.appendChild(round);
+            break;          
+          default:
+            cellElement.innerHTML = book[property];
+        }
+      }else continue;
       fileElement.appendChild(cellElement);
     }
-    //Adding edit and delete button to each row
-    let editButton = document.createElement('i');
-    editButton.setAttribute('class', 'far fa-edit');
-    editButton.setAttribute('id', 'edit-button');
-    fileElement.appendChild(editButton);
-    let removeButton = document.createElement('i');
-    removeButton.setAttribute('class', 'far fa-trash-alt');
-    removeButton.setAttribute('id', 'remove-button');
-    fileElement.appendChild(removeButton);
+    //Appending edit and delete button to each row
+    fileElement.insertAdjacentHTML('beforeend', '<i id="edit-button" class="far fa-edit"></i>');
+    fileElement.insertAdjacentHTML('beforeend', '<i id="remove-button" class="far fa-trash-alt"></i>')
 
     document.getElementById('table-books').appendChild(fileElement);
   });
@@ -110,9 +98,10 @@ function updateDisplayCountBooks() {
 //Call change read status and swap color button at DOM
 function changeIsReadColor(e) {
   if (e.target.id == 'is-readed') {
-    library[e.target.closest('tr').dataset.id].changeReadStatus();
+    let indexToChange = e.target.closest('tr').dataset.id;
+    library[indexToChange].changeReadStatus();
     let domElem = e.target;
-    let isBookRead = library[e.target.closest('tr').dataset.id].isRead;
+    let isBookRead = library[indexToChange].isRead;
     showIsReadColor(domElem, isBookRead);
   } else return;
 }
@@ -120,11 +109,7 @@ function changeIsReadColor(e) {
 //Changes color when called.
 function showIsReadColor(elem, isRead) {
   elem.classList = ''
-  if (isRead) {
-    elem.classList.add('readed')
-  } else {
-    elem.classList.add('not-readed');
-  }
+  isRead ? elem.classList.add('readed') : elem.classList.add('not-readed');
 }
 
 
