@@ -25,11 +25,11 @@ function submitForm(event) {
   if (!validateForm(fields)) return false;
   
   //Edit or create new book when submit button is pressed.
-  let bookForm = new Book(titleForm.value, authorForm.value, languageForm.value, new Date(publishDateForm.value), numPagesForm.value, isReadForm.checked);
+  let bookForm = new Book(titleForm.value, authorForm.value, languageForm.value, publishDateForm.value, numPagesForm.value, isReadForm.checked);
   if(document.getElementById('formModalLabel').innerText == 'Edit Book'){
     editBookFromLibrary(index, bookForm);
   }else{
-    bookForm = new Book(titleForm.value, authorForm.value, languageForm.value, new Date(publishDateForm.value), numPagesForm.value, isReadForm.checked);
+    bookForm = new Book(titleForm.value, authorForm.value, languageForm.value, publishDateForm.value, numPagesForm.value, isReadForm.checked);
     addBookToLibrary(bookForm);
   }
   
@@ -49,7 +49,7 @@ function fillForm(event){
     titleForm.value = library[index].title;
     authorForm.value = library[index].author;
     languageForm.value = library[index].language;
-    publishDateForm.value = library[index].publishDate.toISOString().substring(0,10);
+    publishDateForm.value = new Date(library[index].publishDate).toISOString().substr(0,10);
     numPagesForm.value = library[index].numPages;
     isReadForm.checked = library[index].isRead;
 
@@ -66,7 +66,7 @@ function validateForm(fieldsForm) {
 
     if (field.value === '' ||
         field.id === 'pages' && field.value < 1 ||
-        field.id === 'publishDate' && isNaN(new Date(field.value).getTime()) || new Date(field.value).getFullYear().toString().length > 4 ||
+        field.id === 'publishDate' && field.value === '' || new Date(field.value).getFullYear().toString().length > 4 ||
         (field.id === 'author' || field.id === 'language') && /[^A-Za-zÀ-ú -.]/.test(field.value)) {
       field.classList.remove('is-valid');
       field.classList.add('is-invalid');
