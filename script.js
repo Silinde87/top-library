@@ -33,11 +33,15 @@ function addBookToLibrary(book) {
 
 //Removes a book from the library
 function removeBookFromLibrary(e) {
-  if (e.target.id == 'remove-button') {
+  if (e.target.classList.value.includes('remove-button')) {
     let index = e.target.closest('tr').dataset.id
     library.splice(index, 1);
     showBooks();
   }
+}
+
+function editBookFromLibrary(index, book){
+  library.splice(index, 1, book);
 }
 
 //Function that loops through the array and display each book on page
@@ -73,8 +77,10 @@ function showBooks() {
       fileElement.appendChild(cellElement);
     }
     //Appending edit and delete button to each row
-    fileElement.insertAdjacentHTML('beforeend', '<i id="edit-button" class="far fa-edit"></i>');
-    fileElement.insertAdjacentHTML('beforeend', '<i id="remove-button" class="far fa-trash-alt"></i>')
+    fileElement.insertAdjacentHTML(
+      'beforeend', 
+      '<i class="far fa-edit edit-button" data-toggle="modal" data-target="#formModal"></i>');
+    fileElement.insertAdjacentHTML('beforeend', '<i class="far fa-trash-alt remove-button"></i>')
 
     document.getElementById('table-books').appendChild(fileElement);
   });
@@ -102,7 +108,7 @@ function changeIsReadColor(e) {
     library[indexToChange].changeReadStatus();
     let domElem = e.target;
     let isBookRead = library[indexToChange].isRead;
-    showIsReadColor(domElem, isBookRead);
+    showIsReadColor(domElem, isBookRead);    
   } else return;
 }
 
@@ -110,6 +116,7 @@ function changeIsReadColor(e) {
 function showIsReadColor(elem, isRead) {
   elem.classList = ''
   isRead ? elem.classList.add('readed') : elem.classList.add('not-readed');
+  updateDisplayCountBooks()
 }
 
 
