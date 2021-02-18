@@ -8,7 +8,7 @@ let authorForm = document.getElementById('author');
 let languageForm = document.getElementById('language');
 let publishDateForm = document.getElementById('publishDate');
 let numPagesForm = document.getElementById('pages');
-let isReadForm = document.getElementById('readed');
+let isReadForm = document.getElementById('read');
 
 let fields = [titleForm, authorForm, languageForm, publishDateForm, numPagesForm];
 

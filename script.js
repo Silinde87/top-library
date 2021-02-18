@@ -66,7 +66,7 @@ function showBooks() {
             break;
           case 'isRead':
             let round = document.createElement('div');
-            round.setAttribute('id', 'is-readed');
+            round.setAttribute('id', 'is-read');
             showIsReadColor(round, book[property]);
             cellElement.appendChild(round);
             break;          
@@ -103,7 +103,7 @@ function updateDisplayCountBooks() {
 
 //Call change read status and swap color button at DOM
 function changeIsReadColor(e) {
-  if (e.target.id == 'is-readed') {
+  if (e.target.id == 'is-read') {
     let indexToChange = e.target.closest('tr').dataset.id;
     library[indexToChange].changeReadStatus();
     let domElem = e.target;
@@ -115,7 +115,7 @@ function changeIsReadColor(e) {
 //Changes color when called.
 function showIsReadColor(elem, isRead) {
   elem.classList = ''
-  isRead ? elem.classList.add('readed') : elem.classList.add('not-readed');
+  isRead ? elem.classList.add('read') : elem.classList.add('not-read');
   updateDisplayCountBooks()
 }
 
