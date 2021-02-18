@@ -12,30 +12,29 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <i class="fas fa-book"></i>
-            <span>My Own Library</span>
+    <header class="header">
+        <div class="logo-container">
+            <i id="logo-img" class="fas fa-book"></i>
+            <span id="logo-title">My Own Library</span>
         </div>
-        <div class="stats">
-            <h2>Stats</h2>
-            <div class="total-books">
-                <h3>Total books:</h3>
+        <div class="stats-container">
+            <div class="total-label-container">
+                <span class="total-label">Total books:</span>
                 <span id="books-count"></span>
             </div>
-            <div class="total-read">
-                <h3>Read:</h3>
+            <div class="total-label-container">
+                <span class="total-label">Read:</span>
                 <span id="read-count"></span>
             </div>
-            <div class="total-not-read">
-                <h3>Not Read:</h3>
+            <div class="total-label-container">
+                <span class="total-label">Not Read:</span>
                 <span id="not-read-count"></span>
             </div>
         </div>
     </header>
     <section class="main">
         <nav id="nav-bar"></nav>
-        <div id="container">
+        <div id="main-container">
             <table>
                 <thead>
                     <tr>
@@ -50,10 +49,12 @@
                 <tbody id="table-books"></tbody>
             </table>
         </div>
+        <div id="add-btn-container">
+            <button id="add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
     </section>
-    <button id="add-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
-        <i class="fas fa-plus"></i>
-    </button>
 
     <!--Form Modal-->
     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"

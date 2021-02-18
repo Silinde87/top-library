@@ -40,7 +40,7 @@ function removeBookFromLibrary(e) {
   }
 }
 
-function editBookFromLibrary(index, book){
+function editBookFromLibrary(index, book) {
   library.splice(index, 1, book);
 }
 
@@ -59,8 +59,8 @@ function showBooks() {
     for (const property in book) {
       let cellElement = document.createElement('td');
 
-      if(book.hasOwnProperty(property)){
-        switch (property) {          
+      if (book.hasOwnProperty(property)) {
+        switch (property) {
           case 'publishDate':
             cellElement.innerHTML = new Date(book[property]).toLocaleDateString();
             break;
@@ -69,16 +69,17 @@ function showBooks() {
             round.setAttribute('id', 'is-read');
             showIsReadColor(round, book[property]);
             cellElement.appendChild(round);
-            break;          
+            break;
           default:
             cellElement.innerHTML = book[property];
         }
-      }else continue;
+      } else continue;
+      cellElement.setAttribute('id', property + '-cell');
       fileElement.appendChild(cellElement);
     }
     //Appending edit and delete button to each row
     fileElement.insertAdjacentHTML(
-      'beforeend', 
+      'beforeend',
       '<i class="far fa-edit edit-button" data-toggle="modal" data-target="#formModal"></i>');
     fileElement.insertAdjacentHTML('beforeend', '<i class="far fa-trash-alt remove-button"></i>')
 
@@ -108,7 +109,7 @@ function changeIsReadColor(e) {
     library[indexToChange].changeReadStatus();
     let domElem = e.target;
     let isBookRead = library[indexToChange].isRead;
-    showIsReadColor(domElem, isBookRead);    
+    showIsReadColor(domElem, isBookRead);
   } else return;
 }
 
