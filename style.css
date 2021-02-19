@@ -159,3 +159,18 @@ table{
     text-align: center;
     margin: 15px 0px;
 }
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 20px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fab{
+    margin-left: 10px;
+    color: black;
+}

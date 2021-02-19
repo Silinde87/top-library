@@ -36,13 +36,13 @@ function addBookToLibrary(book) {
 
 //Removes a book from the library
 function removeBookFromLibrary() {
-      library.splice(indexToDelete, 1);
-      showBooks();
-      $("#confirmModal").modal('hide');
+  library.splice(indexToDelete, 1);
+  showBooks();
+  $("#confirmModal").modal('hide');
 }
 
 //Get index based on thrash button index pressed. Adds title and author to formModal
-function getIndexToDelete(e){
+function getIndexToDelete(e) {
   indexToDelete = e.target.closest('tr').dataset.id;
   elemToDelete.innerText = `${library[indexToDelete].title} by ${library[indexToDelete].author}`;
 }
