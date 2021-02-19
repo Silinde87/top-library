@@ -182,7 +182,7 @@ function addTestBooks(){
 //Retrieve data from storage when page is onload and show the books
 window.onload = function(){
   library = retrieveStorage();
-  if(library.length == 0) addTestBooks();
+  if(library == null || library.length == 0) addTestBooks();
   showBooks();
 };
 
