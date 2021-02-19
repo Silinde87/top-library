@@ -154,3 +154,8 @@ table{
     margin: auto;
     box-shadow: 2px 2px rgba(179,179,179,0.65);
 }
+#elem-to-delete{
+    font-weight: bold;
+    text-align: center;
+    margin: 15px 0px;
+}

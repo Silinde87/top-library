@@ -3,9 +3,12 @@ let library = [];
 let booksCount = 0;
 let readCount = 0;
 let notReadCount = 0;
+let indexToDelete;
 
 //DOM Elements
 let tableBooks = document.getElementById('table-books');
+let confirmBtn = document.getElementById('btn-confirm-delete');
+let elemToDelete = document.getElementById('elem-to-delete');
 
 //Constructor
 function Book(title, author, language, publishDate, numPages, isRead) {
@@ -24,7 +27,7 @@ Book.prototype.changeReadStatus = function () {
 
 //Adds Click functionality to certain buttons.
 document.addEventListener('click', changeIsReadColor);
-document.addEventListener('click', removeBookFromLibrary);
+confirmBtn.addEventListener('click', removeBookFromLibrary);
 
 //Takes a book as a parameter and adds it to the library array
 function addBookToLibrary(book) {
@@ -32,12 +35,16 @@ function addBookToLibrary(book) {
 }
 
 //Removes a book from the library
-function removeBookFromLibrary(e) {
-  if (e.target.classList.value.includes('remove-button')) {
-    let index = e.target.closest('tr').dataset.id
-    library.splice(index, 1);
-    showBooks();
-  }
+function removeBookFromLibrary() {
+      library.splice(indexToDelete, 1);
+      showBooks();
+      $("#confirmModal").modal('hide');
+}
+
+//Get index based on thrash button index pressed. Adds title and author to formModal
+function getIndexToDelete(e){
+  indexToDelete = e.target.closest('tr').dataset.id;
+  elemToDelete.innerText = `${library[indexToDelete].title} by ${library[indexToDelete].author}`;
 }
 
 //Swap a book passed as parameter for the index book at library array
@@ -46,20 +53,20 @@ function editBookFromLibrary(index, book) {
 }
 
 //Sort the library array by the parameter.
-function sortLibrary(e){
+function sortLibrary(e) {
   let param = e.target.id.split('-')[1];
   e.target.classList.toggle('arrow-down')
-  if(param === 'numPages'){
-    if(e.target.classList.value.includes('arrow-down')){
-      library.sort((a,b) => b[param] - a[param]);
-    }else{
-      library.sort((a,b) => a[param] - b[param]);
+  if (param === 'numPages') {
+    if (e.target.classList.value.includes('arrow-down')) {
+      library.sort((a, b) => b[param] - a[param]);
+    } else {
+      library.sort((a, b) => a[param] - b[param]);
     }
-  }else{
-    if(e.target.classList.value.includes('arrow-down')){
-      library.sort((a,b) => b[param].localeCompare(a[param]));
-    }else{
-      library.sort((a,b) => a[param].localeCompare(b[param]));
+  } else {
+    if (e.target.classList.value.includes('arrow-down')) {
+      library.sort((a, b) => b[param].localeCompare(a[param]));
+    } else {
+      library.sort((a, b) => a[param].localeCompare(b[param]));
     }
   }
   showBooks();
@@ -102,7 +109,9 @@ function showBooks() {
     fileElement.insertAdjacentHTML(
       'beforeend',
       '<i class="far fa-edit edit-button" data-toggle="modal" data-target="#formModal"></i>');
-    fileElement.insertAdjacentHTML('beforeend', '<i class="far fa-trash-alt remove-button"></i>')
+    fileElement.insertAdjacentHTML(
+      'beforeend',
+      '<i class="far fa-trash-alt remove-button" data-toggle="modal" data-target="#confirmModal"></i>')
 
     document.getElementById('table-books').appendChild(fileElement);
   });
