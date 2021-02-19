@@ -5,10 +5,12 @@ let readCount = 0;
 let notReadCount = 0;
 let indexToDelete;
 
+
 //DOM Elements
 let tableBooks = document.getElementById('table-books');
 let confirmBtn = document.getElementById('btn-confirm-delete');
 let elemToDelete = document.getElementById('elem-to-delete');
+let trashBtn;
 
 //Constructor
 function Book(title, author, language, publishDate, numPages, isRead) {
@@ -75,7 +77,7 @@ function sortLibrary(e) {
 //Function that loops through the array and display each book on page
 function showBooks() {
   //Cleaning the table before start adding data
-  document.getElementById('table-books').innerHTML = ''
+  tableBooks.innerHTML = ''
 
   //Iterating over array library
   let i = 0;
@@ -116,6 +118,8 @@ function showBooks() {
     document.getElementById('table-books').appendChild(fileElement);
   });
   updateDisplayCountBooks();
+  trashBtn = [...document.getElementsByClassName('remove-button')];
+  trashBtn.forEach(btn => btn.addEventListener('click', getIndexToDelete));
 }
 
 //Update books counters
@@ -168,6 +172,7 @@ let book4 = new Book(
 
 //Adds tests books to library array
 function addTestBooks(){
+  library = [];
   addBookToLibrary(book1);
   addBookToLibrary(book2);
   addBookToLibrary(book3);

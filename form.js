@@ -3,7 +3,6 @@ let index;
 //DOM Element
 let formBook = document.getElementById('form-book');
 let sortBtn = [...document.getElementsByClassName('sort-arrow')]
-trashBtn = [...document.getElementsByClassName('remove-button')];
 
 let titleForm = document.getElementById('title');
 let authorForm = document.getElementById('author');
@@ -18,9 +17,6 @@ let fields = [titleForm, authorForm, languageForm, publishDateForm, numPagesForm
 document.getElementById('btn-form').addEventListener('click', submitForm);
 document.addEventListener('click', fillForm);
 sortBtn.forEach(btn => btn.addEventListener('click', sortLibrary));
-trashBtn.forEach(btn => btn.addEventListener('click', getIndexToDelete));
-
-//sortBtn.addEventListener('click', sortLibrary);
 
 //Adds submit form functionality without refreshing page.
 //Also validate inputs, creates de book and adds it to the library.
