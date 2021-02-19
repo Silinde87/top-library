@@ -25,11 +25,19 @@ function storageAvailable(type) {
 //Retrieve library from localStorage
 function retrieveStorage() {
     let libraryParsed;
+    let libraryResult = [];
     if (storageAvailable('localStorage')) {
         let libraryItem = localStorage.getItem('library');
         libraryParsed = JSON.parse(libraryItem);
+        if (libraryParsed !== null) {
+            //This convert libraryParsed (which is an array of unnamed objects), into an array on Book objects.
+            libraryParsed.forEach(elem => {
+                book = new Book(elem.title, elem.author, elem.language, elem.publishDate, elem.numPages, elem.isRead);
+                libraryResult.push(book);
+            });
+        }
     }
-    return libraryParsed;
+    return libraryResult;
 }
 
 //Populate localStorage with library pased as parameter
