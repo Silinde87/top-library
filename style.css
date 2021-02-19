@@ -55,7 +55,7 @@ h2, h3{
     justify-content: center;
     margin: auto;
     max-width: 1150px;
-    min-width: 980px;
+    min-width: 1030px;
     max-height: 600px;
     overflow-y: auto;
 }
@@ -63,6 +63,12 @@ thead{
     border-bottom: 2px solid black;
     font-size: 16px;
     text-align: center;
+}
+.arrow-down{
+    transform: rotate(180deg);
+}
+.sort-arrow{
+    text-shadow: 2px 2px rgba(179,179,179,0.65);
 }
 td{
     padding: 7px 3px;    
@@ -80,11 +86,14 @@ td{
     max-width: 126px;
 }
 #language-cell{
-    max-width: 72px;
+    min-width: 100px;
 }
 #publishDate-cell{
     min-width: 110px;
     padding: 7px 0px;
+}
+#numPages-cell{
+    min-width: 70px;
 }
 tbody > tr{
     border-bottom: 1px solid gray;
@@ -124,7 +133,8 @@ table{
 .edit-button:active,
 .remove-button:active,
 .read:active,
-.not-read:active{
+.not-read:active,
+.sort-arrow:active{
     box-shadow: 0 0;
     transform: translate(3px, 3px);
 }

@@ -40,8 +40,29 @@ function removeBookFromLibrary(e) {
   }
 }
 
+//Swap a book passed as parameter for the index book at library array
 function editBookFromLibrary(index, book) {
   library.splice(index, 1, book);
+}
+
+//Sort the library array by the parameter.
+function sortLibrary(e){
+  let param = e.target.id.split('-')[1];
+  e.target.classList.toggle('arrow-down')
+  if(param === 'numPages'){
+    if(e.target.classList.value.includes('arrow-down')){
+      library.sort((a,b) => b[param] - a[param]);
+    }else{
+      library.sort((a,b) => a[param] - b[param]);
+    }
+  }else{
+    if(e.target.classList.value.includes('arrow-down')){
+      library.sort((a,b) => b[param].localeCompare(a[param]));
+    }else{
+      library.sort((a,b) => a[param].localeCompare(b[param]));
+    }
+  }
+  showBooks();
 }
 
 //Function that loops through the array and display each book on page
