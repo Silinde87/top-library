@@ -165,8 +165,21 @@ let book4 = new Book(
   'Clean Code: A Handbook of Agile Software Craftsmanship',
   'Robert C. Martin', 'Spanish', '2015-3-10', 165, false);
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-showBooks();
+
+//Adds tests books to library array
+function addTestBooks(){
+  addBookToLibrary(book1);
+  addBookToLibrary(book2);
+  addBookToLibrary(book3);
+  addBookToLibrary(book4);
+}
+
+//Retrieve data from storage when page is onload and show the books
+window.onload = function(){
+  library = retrieveStorage();
+  if(library.length == 0) addTestBooks();
+  showBooks();
+};
+
+//populate the storage when tab is closed
+window.addEventListener("beforeunload", () => populateStorage(library));
