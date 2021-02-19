@@ -86,7 +86,8 @@ td{
     max-width: 126px;
 }
 #language-cell{
-    min-width: 100px;
+    min-width: 90px;
+    max-width: 45px;
 }
 #publishDate-cell{
     min-width: 110px;
